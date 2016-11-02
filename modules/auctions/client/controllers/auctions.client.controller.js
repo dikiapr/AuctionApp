@@ -27,7 +27,9 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('auctions.index'); // should we send the User to the list or the updated Article's view?
+        vm.auctionItems.push(res)
+        vm.auction = new AuctionsService()
+
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction saved successfully!' });
       }
 
