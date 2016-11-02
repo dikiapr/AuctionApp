@@ -12,12 +12,12 @@
     vm.auction = auction;
     vm.Auction = {
       destroy: destroy
-    }
+    };
 
     function destroy () {
       if ($window.confirm('Are you sure you want to delete?')) {
         vm.auction.$remove(function() {
-        $uibModalInstance.close({status: 'destroy', auction: vm.auction});
+          $uibModalInstance.close({ status: 'destroy', auction: vm.auction });
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction deleted successfully!' });
         });
       }

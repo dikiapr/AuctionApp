@@ -13,6 +13,7 @@ var path = require('path'),
  */
 exports.create = function (req, res) {
   var auction = new AuctionItem(req.body);
+  auction.user = req.user;
 
   auction.save(function (err) {
     if (err) {
@@ -51,7 +52,7 @@ exports.update = function (req, res) {
  * List of auction
  */
 exports.index = function (req, res) {
-  AuctionItem.find().sort('-closed').exec(function (err, items) {
+  AuctionItem.find().sort('-lastBid').populate('user', 'displayName').exec(function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
@@ -91,7 +92,7 @@ exports.auctionByID = function (req, res, next, id) {
     });
   }
 
-  AuctionItem.findById(id).exec(function (err, auction) {
+  AuctionItem.findById(id).populate('user', 'DisplayName').exec(function (err, auction) {
     if (err) {
       return next(err);
     } else if (!auction) {

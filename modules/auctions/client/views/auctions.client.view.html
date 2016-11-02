@@ -1,19 +1,34 @@
 <div class="col-md-8 col-md-offset-2">
-
+  <br>
+  <br>
   <div>
+    <div class="panel panel-default col-xs-5 col-xs-offset-7">
+      <div class="panel-heading"> Order </div>
+      <div class="panel-body">
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-info" ng-click="vm.changeOrder('name')">Name</button>
+          <button type="button" class="btn btn-info" ng-click="vm.changeOrder('closed')">Closed Date</button>
+          <button type="button" class="btn btn-info" ng-click="vm.changeOrder('minBid')">Min Bid</button>
+          <button type="button" class="btn btn-info" ng-click="vm.changeOrder('user.displayName')">Owner</button>
+        </div>
+      </div>
+    </div>
+
     <table class="table table-hover">
       <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Closed Time</th>
         <th>Current Bid</th>
+        <th>Owner</th>
         <th>Status</th>
       </tr>
-      <tr ng-repeat="item in vm.auctionItems" style="cursor: pointer" ng-click="vm.openDetail(item)">
+      <tr ng-repeat="item in vm.auctionItems | orderBy: vm.order" style="cursor: pointer" ng-click="vm.openDetail(item)">
         <td ng-bind="item._id"></td>
         <td ng-bind="item.name"></td>
         <td ng-bind="item.closed | date:'mediumDate'"></td>
         <td ng-bind="item.minBid"></td>
+        <td ng-bind="item.user.displayName"></td>
         <td><span class="label label-info">Open</span></td>
       </tr>
     </table>

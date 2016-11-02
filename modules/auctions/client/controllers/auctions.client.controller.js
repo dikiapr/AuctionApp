@@ -14,6 +14,7 @@
     vm.auction = auction;
     vm.auctionItems = AuctionsService.query();
     vm.openDetail = openDetail;
+    vm.changeOrder = changeOrder;
 
     function save(isValid) {
       // if (!isValid) {
@@ -27,8 +28,8 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        vm.auctionItems.push(res)
-        vm.auction = new AuctionsService()
+        vm.auctionItems.push(res);
+        vm.auction = new AuctionsService();
 
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction saved successfully!' });
       }
@@ -56,13 +57,23 @@
 
       modalInstance.result.then(
         function (resp) {
-          if (resp.status==='destroy') {
+          if (resp.status === 'destroy') {
             var index = vm.auctionItems.indexOf(resp.auction);
             vm.auctionItems.splice(index, 1);
           }
         },
         function () {}
       );
+    }
+
+    function changeOrder (order) {
+      if (vm.order === order) return toggleOrder();
+      vm.order = order;
+    }
+
+    function toggleOrder () {
+      if (vm.order[0] === '-') return vm.order.substring(1);
+      vm.order = '-'.concat(vm.order);
     }
 
   }
