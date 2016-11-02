@@ -1,0 +1,47 @@
+<div class="col-md-8 col-md-offset-2">
+
+  <div>
+    <table class="table table-hover">
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Closed Time</th>
+        <th>Current Bid</th>
+        <th>Status</th>
+      </tr>
+      <tr ng-repeat="item in vm.auctionItems" style="cursor: pointer" ng-click="vm.openDetail(item)">
+        <td ng-bind="item._id"></td>
+        <td ng-bind="item.name"></td>
+        <td ng-bind="item.closed | date:'mediumDate'"></td>
+        <td ng-bind="item.minBid"></td>
+        <td><span class="label label-info">Open</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <br>
+    <form name="vm.form.auctionForm" ng-submit="vm.save()">
+      <div class="row">
+        <div class="col-md-4">
+          <label>Name of item</label>
+          <input type="text" placeholder="Amulet of akatosh" class="form-control" required ng-model="vm.auction.name">
+        </div>
+        <div class="col-md-4">
+          <label>Closed</label>
+          <input type="date" placeholder="13/12/2016" class="form-control" required ng-model="vm.auction.closed">
+        </div>
+        <div class="col-md-4">
+          <label>Min bid</label>
+          <input type="number" placeholder="2100" class="form-control" required ng-model="vm.auction.minBid">
+        </div>
+      </div>
+
+      <br>
+      <button type="submit" class="btn btn-default btn-block">Add Item</button>
+      <br>
+    </form>
+
+  </div>
+
+</div>
