@@ -5,9 +5,9 @@
     .module('auctions.services')
     .factory('AuctionsService', AuctionsService);
 
-  AuctionsService.$inject = ['$resource', '$log'];
+  AuctionsService.$inject = ['$resource', '$log', 'BidsService'];
 
-  function AuctionsService($resource, $log) {
+  function AuctionsService($resource, $log, BidsService) {
     var Auction = $resource('/api/auctions/:auctionId', {
       auctionId: '@_id'
     }, {
@@ -20,6 +20,14 @@
       createOrUpdate: function () {
         var auction = this;
         return createOrUpdate(auction);
+      },
+      newBid: function () {
+        var auction = this;
+        return new BidsService({ auctionItem: auction });
+      },
+      bids: function () {
+        var auction = this;
+        return BidsService.query({ auctionItem: { _id: auction._id } });
       }
     });
 

@@ -37,6 +37,10 @@ var AuctionItemSchema = new Schema({
   lastBid: {
     type: Date,
     default: Date.now
+  },
+  bids: {
+    type: Schema.Types.ObjectId,
+    ref: 'Bid'
   }
 });
 

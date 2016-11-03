@@ -51,6 +51,9 @@
         resolve: {
           auctionResolve: function () {
             return auction;
+          },
+          bidResolve: function () {
+            return auction.newBid();
           }
         }
       });
