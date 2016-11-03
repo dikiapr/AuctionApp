@@ -59,13 +59,18 @@
       });
 
       modalInstance.result.then(
-        function (resp) {
-          if (resp.status === 'destroy') {
-            var index = vm.auctionItems.indexOf(resp.auction);
+        function (status) {
+          if (status === 'destroy') {
+            var index = vm.auctionItems.indexOf(auction);
             vm.auctionItems.splice(index, 1);
           }
         },
-        function () {}
+        function () {
+            var index = vm.auctionItems.indexOf(auction);
+            auction.$get().then(function (auction) {
+              vm.auctionItems[index] = auction;
+            })
+        }
       );
     }
 

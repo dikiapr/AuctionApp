@@ -18,13 +18,13 @@ exports.create = function (req, res) {
     bid.auctionItem = req.auction;
   }
   bid.user = req.user;
-
   bid.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      AuctionItem.findOneAndUpdate({ _id: bid.auctionItem }, { lastBidValue: bid.value, lastBidDate: bid.created }, function (err) {  console.log(err) } )
       res.json(bid);
     }
   });
@@ -37,8 +37,8 @@ exports.create = function (req, res) {
 exports.index = function (req, res) {
   var query = {};
   if (req.query) {
-    // FIX THIS
     query = req.query;
+    // FIX THIS
     if (query.hasOwnProperty('auctionItem') && typeof query.auctionItem === 'string') {
       query.auctionItem = JSON.parse(query.auctionItem);
     }

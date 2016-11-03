@@ -17,18 +17,18 @@
 
     <table class="table table-hover">
       <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Closed Time</th>
         <th>Current Bid</th>
+        <th>Last Bid</th>
         <th>Owner</th>
         <th>Status</th>
       </tr>
       <tr ng-repeat="item in vm.auctionItems | orderBy: vm.order" style="cursor: pointer" ng-click="vm.openDetail(item)">
-        <td ng-bind="item._id"></td>
         <td ng-bind="item.name"></td>
         <td ng-bind="item.closed | date:'mediumDate'"></td>
-        <td ng-bind="item.minBid"></td>
+        <td ng-bind="item.lastBidValue"></td>
+        <td ng-bind="item.lastBidDate | date:'medium'"></td>
         <td ng-bind="item.user.displayName"></td>
         <td><span class="label label-info">Open</span></td>
       </tr>

@@ -34,7 +34,12 @@ var AuctionItemSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  lastBid: {
+  lastBidValue: {
+    type: Number,
+    default: '',
+    required: 'Price cannot be blank'
+  },
+  lastBidDate: {
     type: Date,
     default: Date.now
   },

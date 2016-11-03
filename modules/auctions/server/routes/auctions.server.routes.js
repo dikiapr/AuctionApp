@@ -13,7 +13,7 @@ module.exports = function (app) {
 
   // Single article routes
   app.route('/api/auctions/:auctionId')
-  //   .get(articles.read)
+    .get(auctions.read)
     // .put(auctions.update)
     .delete(auctions.delete);
 
