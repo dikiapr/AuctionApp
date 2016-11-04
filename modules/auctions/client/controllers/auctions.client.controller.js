@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsController', AuctionsController);
 
-  AuctionsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionsService', 'Notification'];
+  AuctionsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionsService', 'Notification', 'BidAnnouncerService'];
 
-  function AuctionsController ($scope, $state, $uibModal, auction, AuctionsService, Notification) {
+  function AuctionsController ($scope, $state, $uibModal, auction, AuctionsService, Notification, BidAnnouncerService) {
     var vm = this;
 
     vm.save = save;
@@ -31,6 +31,7 @@
         vm.auctionItems.push(res);
         vm.auction = new AuctionsService();
 
+        BidAnnouncerService.newAuction(res)
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction saved successfully!' });
       }
 

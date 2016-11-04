@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   AuctionItem = mongoose.model('AuctionItem'),
+  AuctionBid = mongoose.model('AuctionBid'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -48,9 +49,17 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
   var auction = req.auction;
 
-  auction.name = req.body.title;
-  auction.closed = new Date(req.body.closed);
-  auction.minBid = req.body.minBid;
+  // auction.name = req.body.title;
+  // auction.closed = new Date(req.body.closed);
+  // auction.minBid = req.body.minBid;
+
+  var statuses = ['open', 'close'];
+  var newStatus = req.query.status;
+
+  if (newStatus && newStatus.indexOf(newStatus) > -1 ) {
+    auction.status = newStatus;
+    auction.closedAt = new Date();
+  }
 
   auction.save(function (err) {
     if (err) {
@@ -96,6 +105,20 @@ exports.delete = function (req, res) {
   });
 };
 
+/**
+ * Show the current article
+ */
+exports.lastBid = function (req, res) {
+  AuctionBid.findOne({auctionItem: req.auction}).sort('-created').populate('user', 'displayName').exec(function (err, items) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(items);
+    }
+  });
+};
 
 /**
  * Acution middleware
@@ -108,7 +131,7 @@ exports.auctionByID = function (req, res, next, id) {
     });
   }
 
-  AuctionItem.findById(id).populate('user', 'DisplayName').exec(function (err, auction) {
+  AuctionItem.findById(id).populate('user', 'displayName').exec(function (err, auction) {
     if (err) {
       return next(err);
     } else if (!auction) {

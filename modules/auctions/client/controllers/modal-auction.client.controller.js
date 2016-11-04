@@ -5,14 +5,15 @@
     .module('auctions')
     .controller('AuctionModalController', AuctionModalController);
 
-  AuctionModalController.$inject = ['$uibModalInstance', '$window', 'auctionResolve', 'bidResolve', 'Authentication', 'Notification'];
+  AuctionModalController.$inject = ['$uibModalInstance', '$window', 'auctionResolve', 'bidResolve', 'Authentication', 'Notification', 'BidAnnouncerService'];
 
-  function AuctionModalController ($uibModalInstance, $window, auction, bid, Authentication, Notification) {
+  function AuctionModalController ($uibModalInstance, $window, auction, bid, Authentication, Notification, BidAnnouncerService) {
     var vm = this;
     vm.auction = auction;
     vm.authentication = Authentication;
     vm.Auction = {
-      destroy: destroy
+      destroy: destroy,
+      close: close
     };
     vm.Bid = {
       save: save
@@ -46,15 +47,32 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        vm.bids.unshift(res);
-        console.log('success');
         vm.bid = auction.newBid();
+        vm.bids.unshift(res);
 
+        res.auction = vm.auction;
+        BidAnnouncerService.bidCreated(res)
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Bid saved successfully!' });
       }
 
       function errorCallback(res) {
         Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Bid save error!' });
+      }
+    }
+
+    function close() {
+      vm.auction.$close()
+        .then(successCallback)
+        .catch(errorCallback);
+
+      function successCallback(res) {
+        vm.auction.status = res.status;
+        BidAnnouncerService.auctionClosed(res)
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Bid close successfully!' });
+      }
+
+      function errorCallback(res) {
+        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Bid close error!' });
       }
     }
 

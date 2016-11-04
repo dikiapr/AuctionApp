@@ -12,7 +12,7 @@
       </div>
     </div>
     <div ng-if="!vm.isOwner">
-      <form>
+      <form ng-if="vm.auction.status === 'open'">
         <div class="input-group">
           <input type="number" class="form-control" min="100" value="100" ng-model="vm.bidAdd">
           <span class="input-group-btn">
@@ -21,8 +21,14 @@
         </div>
       </form>
     </div>
-    <button class="btn btn-danger" ng-click="vm.Auction.destroy()" ng-if="vm.isOwner">Delete this ads</button>
+    <div ng-if="vm.isOwner">
+      <button class="btn btn-danger" ng-click="vm.Auction.destroy()">Delete</button>
+      <button class="btn btn-warning" ng-click="vm.Auction.close()" ng-if="vm.auction.status !== 'close'">Close auction</button>
+    </div>
   </div>
 </div>
 <div class="modal-footer">
+  <div ng-if="vm.auction.status === 'close'">
+    <p><i>The auction has been closed {{vm.auction.closedAt | timeAgo}}</i></p>
+  </div>
 </div>

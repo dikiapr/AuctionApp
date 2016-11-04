@@ -30,6 +30,14 @@ var AuctionItemSchema = new Schema({
     default: '',
     required: 'Price cannot be blank'
   },
+  status: {
+    type: String,
+    default: 'open'
+  },
+  closedAt: {
+    type: Date,
+    default: ''
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

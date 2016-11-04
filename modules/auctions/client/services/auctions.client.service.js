@@ -13,6 +13,14 @@
     }, {
       update: {
         method: 'PUT'
+      },
+      close: {
+        method: 'PUT',
+        params: {status: 'close'}
+      },
+      getLastBid: {
+        method: 'GET',
+        action: 'last-bid'
       }
     });
 

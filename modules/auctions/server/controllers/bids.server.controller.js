@@ -24,8 +24,15 @@ exports.create = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      AuctionItem.findOneAndUpdate({ _id: bid.auctionItem }, { lastBidValue: bid.value, lastBidDate: bid.created }, function (err) {  console.log(err) } )
-      res.json(bid);
+      AuctionItem.findOneAndUpdate({ _id: bid.auctionItem }, { lastBidValue: bid.value, lastBidDate: bid.created }, function (err, doc) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(bid)
+        }
+      });
     }
   });
 };

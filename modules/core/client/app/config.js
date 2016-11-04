@@ -6,7 +6,7 @@
   var service = {
     applicationEnvironment: window.env,
     applicationModuleName: applicationModuleName,
-    applicationModuleVendorDependencies: ['ngResource', 'ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'ngFileUpload', 'ngImgCrop', 'ui-notification'],
+    applicationModuleVendorDependencies: ['ngResource', 'ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstrap', 'ngFileUpload', 'ngImgCrop', 'ui-notification', 'yaru22.angular-timeago'],
     registerModule: registerModule
   };
 
@@ -20,6 +20,10 @@
     // Add the module to the AngularJS configuration file
     angular.module(applicationModuleName).requires.push(moduleName);
   }
+
+  angular.module('yaru22.angular-timeago').config(function(timeAgoSettings) {
+    timeAgoSettings.allowFuture = true;
+  });
 
   // Angular-ui-notification configuration
   angular.module('ui-notification').config(function(NotificationProvider) {
