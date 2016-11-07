@@ -3,15 +3,15 @@
 
   angular
     .module('auctions')
-    .controller('AuctionModalController', AuctionModalController);
+    .controller('ItemModalController', ItemModalController);
 
-  AuctionModalController.$inject = ['$uibModalInstance', '$window', 'auctionResolve', 'bidResolve', 'Authentication', 'Notification', 'BidAnnouncerService'];
+  ItemModalController.$inject = ['$uibModalInstance', '$window', 'itemResolve', 'bidResolve', 'Authentication', 'Notification', 'BidAnnouncerService'];
 
-  function AuctionModalController ($uibModalInstance, $window, auction, bid, Authentication, Notification, BidAnnouncerService) {
+  function ItemModalController ($uibModalInstance, $window, item, bid, Authentication, Notification, BidAnnouncerService) {
     var vm = this;
-    vm.auction = auction;
+    vm.item = item;
     vm.authentication = Authentication;
-    vm.Auction = {
+    vm.Item = {
       destroy: destroy,
       close: close
     };
@@ -19,14 +19,14 @@
       save: save
     };
     vm.bid = bid;
-    vm.bids = auction.bids();
+    vm.bids = vm.item.bids();
     vm.bidAdd = 100;
 
-    vm.isOwner = (vm.authentication.user.displayName === vm.auction.user.displayName);
+    vm.isOwner = (vm.authentication.user.displayName === vm.item.user.displayName);
 
     function destroy () {
       if ($window.confirm('Are you sure you want to delete?')) {
-        vm.auction.$remove(function() {
+        vm.item.$remove(function() {
           $uibModalInstance.close('destroy');
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction deleted successfully!' });
         });
@@ -38,7 +38,7 @@
       //   $scope.$broadcast('show-errors-check-validity', 'vm.form.auctionForm');
       //   return false;
       // }
-      var minValue = vm.bids[0] ? vm.bids[0].value : auction.minBid;
+      var minValue = vm.bids[0] ? vm.bids[0].value : vm.item.minBid;
       vm.bid.value = minValue + vm.bidAdd;
 
       // Create a new article, or update the current instance
@@ -47,10 +47,10 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        vm.bid = auction.newBid();
+        vm.bid = item.newBid();
         vm.bids.unshift(res);
 
-        res.auction = vm.auction;
+        res.auctionItem = vm.item;
         BidAnnouncerService.bidCreated(res);
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Bid saved successfully!' });
       }
@@ -61,12 +61,12 @@
     }
 
     function close() {
-      vm.auction.$close()
+      vm.item.$close()
         .then(successCallback)
         .catch(errorCallback);
 
       function successCallback(res) {
-        vm.auction.status = res.status;
+        vm.item.status = res.status;
         BidAnnouncerService.auctionClosed(res);
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Bid close successfully!' });
       }

@@ -38,7 +38,7 @@
             <th>Owner</th>
             <th>Status</th>
           </tr>
-          <tr ng-repeat="item in vm.auctionItems | orderBy: vm.order | filter: vm.search" style="cursor: pointer" ng-click="vm.openDetail(item)">
+          <tr ng-repeat="item in vm.items | orderBy: vm.order | filter: vm.search" style="cursor: pointer" ng-click="vm.openDetail(item)">
             <td ng-bind="item.name"></td>
             <td ng-bind="item.closed | timeAgo"></td>
             <td ng-bind="item.lastBidValue"></td>
@@ -58,15 +58,15 @@
           <div class="row">
             <div class="col-md-4">
               <label>Name of item</label>
-              <input type="text" placeholder="Amulet of akatosh" class="form-control" required ng-model="vm.auctionItem.name">
+              <input type="text" placeholder="Amulet of akatosh" class="form-control" required ng-model="vm.item.name">
             </div>
             <div class="col-md-4">
               <label>Closed</label>
-              <input type="date" placeholder="13/12/2016" class="form-control" required ng-model="vm.auctionItem.closed">
+              <input type="date" placeholder="13/12/2016" class="form-control" required ng-model="vm.item.closed">
             </div>
             <div class="col-md-4">
               <label>Min bid</label>
-              <input type="number" placeholder="2100" class="form-control" required ng-model="vm.auctionItem.minBid">
+              <input type="number" placeholder="2100" class="form-control" required ng-model="vm.item.minBid">
             </div>
           </div>
 

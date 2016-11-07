@@ -5,14 +5,14 @@
     .module('auctions')
     .controller('ItemsController', ItemsController);
 
-  ItemsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
+  ItemsController.$inject = ['$scope', '$state', '$uibModal', 'auctionItemResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
 
   function ItemsController ($scope, $state, $uibModal, auctionItem, AuctionItemsService, Notification, BidAnnouncerService) {
     var vm = this;
 
     vm.save = save;
-    vm.auctionItem = auctionItem;
-    vm.auctionItems = AuctionItemsService.query();
+    vm.item = auctionItem;
+    vm.items = AuctionItemsService.query();
     vm.openDetail = openDetail;
     vm.changeOrder = changeOrder;
 
@@ -23,15 +23,15 @@
       // }
 
       // Create a new article, or update the current instance
-      vm.auctionItem.createOrUpdate()
+      vm.item.createOrUpdate()
         .then(successCallback)
         .catch(errorCallback);
 
       function successCallback(res) {
-        vm.auctionItems.push(res);
-        vm.auctionItem = new AuctionItemsService();
+        vm.items.push(res);
+        vm.item = new AuctionItemsService();
 
-        BidAnnouncerService.newAuction(res);
+        BidAnnouncerService.newItem(res);
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction saved successfully!' });
       }
 
@@ -40,21 +40,21 @@
       }
     }
 
-    function openDetail (auction) {
+    function openDetail (item) {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         templateUrl: '/modules/auctions/client/views/modal-item.client.view.html',
         size: 'sm',
-        controller: 'AuctionModalController',
+        controller: 'ItemModalController',
         controllerAs: 'vm',
         resolve: {
-          auctionResolve: function () {
-            return auction;
+          itemResolve: function () {
+            return item;
           },
           bidResolve: function () {
-            return auction.newBid();
+            return item.newBid();
           }
         }
       });
@@ -62,14 +62,14 @@
       modalInstance.result.then(
         function (status) {
           if (status === 'destroy') {
-            var index = vm.auctionItems.indexOf(auction);
-            vm.auctionItems.splice(index, 1);
+            var index = vm.items.indexOf(item);
+            vm.items.splice(index, 1);
           }
         },
         function () {
-          var index = vm.auctionItems.indexOf(auction);
-          auction.$get().then(function (auction) {
-            vm.auctionItems[index] = auction;
+          var index = vm.items.indexOf(item);
+          item.$get().then(function (item) {
+            vm.items[index] = item;
           });
         }
       );

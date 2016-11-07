@@ -23,15 +23,15 @@
           pageTitle: 'Mean Auctions!'
         },
         resolve: {
-          auctionResolve: newAuction
+          auctionItemResolve: newAuctionItem
         }
       });
 
   }
 
-  newAuction.$inject = ['AuctionItemsService'];
+  newAuctionItem.$inject = ['AuctionItemsService'];
 
-  function newAuction(AuctionItemsService) {
+  function newAuctionItem(AuctionItemsService) {
     return new AuctionItemsService();
   }
 }());

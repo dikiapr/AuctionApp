@@ -10,33 +10,33 @@
   function BidAnnouncerService(Socket) {
     var service = {
       bidCreated: bidCreated,
-      auctionClosed: auctionClosed,
-      newAuction: newAuction
+      itemClosed: itemClosed,
+      newItem: newItem
     };
 
     return service;
 
     function bidCreated (bid) {
       var message = {
-        text: ('has bid ' + bid.auction.name+' for ' + bid.value + '!!')
+        text: ('has bid ' + bid.auctionItem.name+' for ' + bid.value + '!!')
       };
 
       sendMessage(message);
     }
 
-    function newAuction (auction) {
+    function newItem (item) {
       var message = {
-        text: ('New auction for ' + auction.name + '!! Bid start from ' + auction.minBid)
+        text: ('New auction for ' + item.name + '!! Bid start from ' + item.minBid)
       };
 
       sendMessage(message);
     }
 
-    function auctionClosed (auction) {
-      auction.$getLastBid()
+    function itemClosed (item) {
+      item.$getLastBid()
       .then(function (bid) {
         var message = {
-          text: ('Congrats '+ bid.user.displayName +' has win auction ' + auction.name + '!!')
+          text: ('Congrats '+ bid.user.displayName +' has win auction ' + item.name + '!!')
         };
         sendMessage(message);
       })

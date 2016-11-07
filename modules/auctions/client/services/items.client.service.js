@@ -26,26 +26,26 @@
 
     angular.extend(AuctionItem.prototype, {
       createOrUpdate: function () {
-        var auction = this;
-        return createOrUpdate(auction);
+        var item = this;
+        return createOrUpdate(item);
       },
       newBid: function () {
-        var auction = this;
-        return new BidsService({ auctionItem: auction });
+        var item = this;
+        return new BidsService({ auctionItem: item });
       },
       bids: function () {
-        var auction = this;
-        return BidsService.query({ auctionItem: { _id: auction._id } });
+        var item = this;
+        return BidsService.query({ auctionItem: { _id: item._id } });
       }
     });
 
     return AuctionItem;
 
-    function createOrUpdate(auction) {
-      if (auction._id) {
-        return auction.$update(onSuccess, onError);
+    function createOrUpdate(item) {
+      if (item._id) {
+        return item.$update(onSuccess, onError);
       } else {
-        return auction.$save(onSuccess, onError);
+        return item.$save(onSuccess, onError);
       }
 
       // Handle successful response
