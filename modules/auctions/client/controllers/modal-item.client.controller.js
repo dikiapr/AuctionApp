@@ -51,7 +51,7 @@
         vm.bids.unshift(res);
 
         res.auction = vm.auction;
-        BidAnnouncerService.bidCreated(res)
+        BidAnnouncerService.bidCreated(res);
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Bid saved successfully!' });
       }
 
@@ -67,7 +67,7 @@
 
       function successCallback(res) {
         vm.auction.status = res.status;
-        BidAnnouncerService.auctionClosed(res)
+        BidAnnouncerService.auctionClosed(res);
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Bid close successfully!' });
       }
 

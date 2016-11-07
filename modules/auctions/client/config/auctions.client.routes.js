@@ -17,7 +17,7 @@
       .state('auctions.index', {
         url: '',
         templateUrl: '/modules/auctions/client/views/auctions.client.view.html',
-        controller: 'AuctionsController',
+        controller: 'ItemsController',
         controllerAs: 'vm',
         data: {
           pageTitle: 'Mean Auctions!'
@@ -29,9 +29,9 @@
 
   }
 
-  newAuction.$inject = ['AuctionsService'];
+  newAuction.$inject = ['AuctionItemsService'];
 
-  function newAuction(AuctionsService) {
-    return new AuctionsService();
+  function newAuction(AuctionItemsService) {
+    return new AuctionItemsService();
   }
 }());

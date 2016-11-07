@@ -1,5 +1,5 @@
 <div class="wraper-auction">
-  <div class="img-header"></div>
+  <div class="img-header" style="background: url({{vm.auction.coverImageURL}}) no-repeat center;"></div>
   <div class="row" style="padding: 0px 10px;">
     <div class="col-md-8">
       <br>
@@ -58,15 +58,15 @@
           <div class="row">
             <div class="col-md-4">
               <label>Name of item</label>
-              <input type="text" placeholder="Amulet of akatosh" class="form-control" required ng-model="vm.auction.name">
+              <input type="text" placeholder="Amulet of akatosh" class="form-control" required ng-model="vm.auctionItem.name">
             </div>
             <div class="col-md-4">
               <label>Closed</label>
-              <input type="date" placeholder="13/12/2016" class="form-control" required ng-model="vm.auction.closed">
+              <input type="date" placeholder="13/12/2016" class="form-control" required ng-model="vm.auctionItem.closed">
             </div>
             <div class="col-md-4">
               <label>Min bid</label>
-              <input type="number" placeholder="2100" class="form-control" required ng-model="vm.auction.minBid">
+              <input type="number" placeholder="2100" class="form-control" required ng-model="vm.auctionItem.minBid">
             </div>
           </div>
 

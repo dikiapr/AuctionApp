@@ -9,52 +9,30 @@ var mongoose = require('mongoose'),
 /**
  * Article Schema
  */
-var AuctionItemSchema = new Schema({
+var AuctionSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
-  name: {
+  title: {
     type: String,
     default: '',
     trim: true,
     required: 'Title cannot be blank'
   },
-  closed: {
-    type: Date,
-    default: '',
-    required: 'Date cannot be blank'
-  },
-  minBid: {
-    type: Number,
-    default: '',
-    required: 'Price cannot be blank'
-  },
-  status: {
+  desc: {
     type: String,
-    default: 'open'
-  },
-  closedAt: {
-    type: Date,
-    default: ''
+    default: '',
+    required: 'Desc cannot be blank'
   },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
   },
-  lastBidValue: {
-    type: Number,
-    default: '',
-    required: 'Price cannot be blank'
-  },
-  lastBidDate: {
-    type: Date,
-    default: Date.now
-  },
-  bids: {
-    type: Schema.Types.ObjectId,
-    ref: 'Bid'
+  coverImageURL: {
+    type: String,
+    default: 'modules/auctions/client/img/profile/default.png'
   }
 });
 
-mongoose.model('AuctionItem', AuctionItemSchema);
+mongoose.model('Auction', AuctionSchema);

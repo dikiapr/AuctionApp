@@ -3,16 +3,16 @@
 
   angular
     .module('auctions')
-    .controller('AuctionsController', AuctionsController);
+    .controller('ItemsController', ItemsController);
 
-  AuctionsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionsService', 'Notification', 'BidAnnouncerService'];
+  ItemsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
 
-  function AuctionsController ($scope, $state, $uibModal, auction, AuctionsService, Notification, BidAnnouncerService) {
+  function ItemsController ($scope, $state, $uibModal, auctionItem, AuctionItemsService, Notification, BidAnnouncerService) {
     var vm = this;
 
     vm.save = save;
-    vm.auction = auction;
-    vm.auctionItems = AuctionsService.query();
+    vm.auctionItem = auctionItem;
+    vm.auctionItems = AuctionItemsService.query();
     vm.openDetail = openDetail;
     vm.changeOrder = changeOrder;
 
@@ -23,15 +23,15 @@
       // }
 
       // Create a new article, or update the current instance
-      vm.auction.createOrUpdate()
+      vm.auctionItem.createOrUpdate()
         .then(successCallback)
         .catch(errorCallback);
 
       function successCallback(res) {
         vm.auctionItems.push(res);
-        vm.auction = new AuctionsService();
+        vm.auctionItem = new AuctionItemsService();
 
-        BidAnnouncerService.newAuction(res)
+        BidAnnouncerService.newAuction(res);
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction saved successfully!' });
       }
 
@@ -45,7 +45,7 @@
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: '/modules/auctions/client/views/modal-auction.client.view.html',
+        templateUrl: '/modules/auctions/client/views/modal-item.client.view.html',
         size: 'sm',
         controller: 'AuctionModalController',
         controllerAs: 'vm',
@@ -67,10 +67,10 @@
           }
         },
         function () {
-            var index = vm.auctionItems.indexOf(auction);
-            auction.$get().then(function (auction) {
-              vm.auctionItems[index] = auction;
-            })
+          var index = vm.auctionItems.indexOf(auction);
+          auction.$get().then(function (auction) {
+            vm.auctionItems[index] = auction;
+          });
         }
       );
     }

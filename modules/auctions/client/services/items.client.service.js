@@ -3,13 +3,13 @@
 
   angular
     .module('auctions.services')
-    .factory('AuctionsService', AuctionsService);
+    .factory('AuctionItemsService', AuctionItemsService);
 
-  AuctionsService.$inject = ['$resource', '$log', 'BidsService'];
+  AuctionItemsService.$inject = ['$resource', '$log', 'BidsService'];
 
-  function AuctionsService($resource, $log, BidsService) {
-    var Auction = $resource('/api/auctions/:auctionId', {
-      auctionId: '@_id'
+  function AuctionItemsService($resource, $log, BidsService) {
+    var AuctionItem = $resource('/api/auctionItems/:auctionItemId', {
+      auctionItemId: '@_id'
     }, {
       update: {
         method: 'PUT'
@@ -24,7 +24,7 @@
       }
     });
 
-    angular.extend(Auction.prototype, {
+    angular.extend(AuctionItem.prototype, {
       createOrUpdate: function () {
         var auction = this;
         return createOrUpdate(auction);
@@ -39,7 +39,7 @@
       }
     });
 
-    return Auction;
+    return AuctionItem;
 
     function createOrUpdate(auction) {
       if (auction._id) {
