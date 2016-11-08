@@ -5,12 +5,15 @@
     .module('auctions')
     .controller('ItemsController', ItemsController);
 
-  ItemsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
+  ItemsController.$inject = ['$scope','$window', '$state', '$uibModal', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
 
-  function ItemsController ($scope, $state, $uibModal, auctionResolve, AuctionItemsService, Notification, BidAnnouncerService) {
+  function ItemsController ($scope, $window, $state, $uibModal, auctionResolve, AuctionItemsService, Notification, BidAnnouncerService) {
     var vm = this;
 
     vm.auction = auctionResolve;
+    vm.Auction = {
+      destroy: destroyAuction
+    };
     vm.save = save;
     vm.item = vm.auction.newItem();
     vm.items = vm.auction.items();
@@ -84,6 +87,15 @@
     function toggleOrder () {
       if (vm.order[0] === '-') return vm.order.substring(1);
       vm.order = '-'.concat(vm.order);
+    }
+
+    function destroyAuction () {
+      if ($window.confirm('Are you sure you want to delete?')) {
+        vm.auction.$remove(function() {
+          $state.go('auctions.index');
+          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction deleted successfully!' });
+        });
+      }
     }
 
   }

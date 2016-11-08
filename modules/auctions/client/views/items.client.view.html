@@ -2,6 +2,7 @@
   <div class="img-header" style="background: url(/{{vm.auction.coverImageURL}}) no-repeat center;"></div>
   <h4 ng-bind="vm.auction.title"></h4>
   <p ng-bind="vm.auction.desc"></p>
+  <button type="button" class="btn btn-sm btn-danger" ng-click="vm.Auction.destroy()" ng-if="vm.auction.isCurrentUserOwner">Delete</button>
   <div class="row" style="padding: 0px 10px;">
     <div class="col-md-8">
       <br>

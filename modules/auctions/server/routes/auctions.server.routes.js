@@ -15,7 +15,7 @@ module.exports = function (app) {
   app.route('/api/auctions/:auctionId')
     .get(auctions.read)
   //   .put(auctions.update)
-  //   .delete(auctions.delete);
+    .delete(auctions.delete);
 
   // app.route('/api/auctions/:auctionId/last-bid')
   //   .get(auctions.lastBid)

@@ -57,6 +57,23 @@ exports.create = function (req, res) {
 };
 
 /**
+ * Delete an auction
+ */
+exports.delete = function (req, res) {
+  var auction = req.auction;
+
+  auction.remove(function (err) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(auction);
+    }
+  });
+};
+
+/**
  * Auction middleware
  */
 exports.auctionByID = function (req, res, next, id) {

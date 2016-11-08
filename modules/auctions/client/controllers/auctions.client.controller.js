@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsController', AuctionsController);
 
-  AuctionsController.$inject = ['auctionResolve', 'Notification', 'AuctionsService'];
+  AuctionsController.$inject = ['$state', 'auctionResolve', 'Notification', 'AuctionsService'];
 
-  function AuctionsController(newAuction, Notification, AuctionsService) {
+  function AuctionsController($state, newAuction, Notification, AuctionsService) {
     var vm = this;
     vm.auction = newAuction;
     vm.Auction = {
@@ -21,7 +21,7 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        vm.Auction.all.push(res);
+        $state.go('auctions.items', {auctionId: res._id})
 
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction created successfully!' });
       }
