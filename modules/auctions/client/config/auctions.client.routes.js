@@ -17,21 +17,40 @@
       .state('auctions.index', {
         url: '',
         templateUrl: '/modules/auctions/client/views/auctions.client.view.html',
-        controller: 'ItemsController',
+        controller: 'AuctionsController',
         controllerAs: 'vm',
         data: {
           pageTitle: 'Mean Auctions!'
         },
         resolve: {
-          auctionItemResolve: newAuctionItem
+          auctionResolve: newAuction
+        }
+      })
+      .state('auctions.items', {
+        url: '/:auctionId',
+        templateUrl: '/modules/auctions/client/views/items.client.view.html',
+        controller: 'ItemsController',
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Mean Auction Items!'
+        },
+        resolve: {
+          auctionResolve: getAuction,
         }
       });
 
   }
 
-  newAuctionItem.$inject = ['AuctionItemsService'];
-
-  function newAuctionItem(AuctionItemsService) {
-    return new AuctionItemsService();
+  newAuction.$inject = ['AuctionsService'];
+  function newAuction(AuctionsService) {
+    return new AuctionsService();
   }
+
+  getAuction.$inject = ['$stateParams', 'AuctionsService'];
+  function getAuction($stateParams, AuctionsService) {
+    return AuctionsService.get({
+      auctionId: $stateParams.auctionId
+    }).$promise;
+  }
+
 }());

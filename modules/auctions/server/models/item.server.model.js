@@ -38,10 +38,6 @@ var AuctionItemSchema = new Schema({
     type: Date,
     default: ''
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   lastBidValue: {
     type: Number,
     default: '',
@@ -58,6 +54,14 @@ var AuctionItemSchema = new Schema({
   coverImageURL: {
     type: String,
     default: 'modules/auctions/client/img/profile/default.png'
+  },
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  auction: {
+    type: Schema.ObjectId,
+    ref: 'Auction'
   }
 });
 

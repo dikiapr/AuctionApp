@@ -31,7 +31,7 @@ var AuctionSchema = new Schema({
   },
   coverImageURL: {
     type: String,
-    default: 'modules/auctions/client/img/profile/default.png'
+    default: 'modules/auctions/client/img/cover/default.jpg'
   }
 });
 

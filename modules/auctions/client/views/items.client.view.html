@@ -1,0 +1,86 @@
+<div class="wraper-auction">
+  <div class="img-header" style="background: url(/{{vm.auction.coverImageURL}}) no-repeat center;"></div>
+  <h4 ng-bind="vm.auction.title"></h4>
+  <p ng-bind="vm.auction.desc"></p>
+  <div class="row" style="padding: 0px 10px;">
+    <div class="col-md-8">
+      <br>
+      <br>
+      <div>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="panel panel-default">
+              <div class="panel-heading"> Filter </div>
+              <div class="panel-body">
+                  <input type="text" class="input-sm form-control" placeholder="Search for..." ng-model="vm.search">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="panel panel-default">
+              <div class="panel-heading"> Order </div>
+              <div class="panel-body">
+                <div class="btn-group btn-group-sm btn-group-justified" role="group" aria-label="...">
+                  <a href="javascript:void(0)" class="btn btn-info" ng-click="vm.changeOrder('name')">Name</a>
+                  <a href="javascript:void(0)" class="btn btn-info" ng-click="vm.changeOrder('closed')">Closed Date</a>
+                  <a href="javascript:void(0)" class="btn btn-info" ng-click="vm.changeOrder('lastBidValue')">Current Bid</a>
+                  <a href="javascript:void(0)" class="btn btn-info" ng-click="vm.changeOrder('user.displayName')">Owner</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-hover">
+          <tr>
+            <th>Name</th>
+            <th>Closed Time</th>
+            <th>Current Bid</th>
+            <th>Last Bid</th>
+            <th>Owner</th>
+            <th>Status</th>
+          </tr>
+          <tr ng-repeat="item in vm.items | orderBy: vm.order | filter: vm.search" style="cursor: pointer" ng-click="vm.openDetail(item)">
+            <td ng-bind="item.name"></td>
+            <td ng-bind="item.closed | timeAgo"></td>
+            <td ng-bind="item.lastBidValue"></td>
+            <td ng-bind="item.lastBidDate | timeAgo"></td>
+            <td ng-bind="item.user.displayName"></td>
+            <td>
+              <span class="label label-info" ng-if="item.status === 'open'">{{item.status}}</span>
+              <span class="label label-danger" ng-if="item.status !== 'open'">Closed</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <br>
+        <form name="vm.form.auctionForm" ng-submit="vm.save()">
+          <div class="row">
+            <div class="col-md-4">
+              <label>Name of item</label>
+              <input type="text" placeholder="Amulet of akatosh" class="form-control" required ng-model="vm.item.name">
+            </div>
+            <div class="col-md-4">
+              <label>Closed</label>
+              <input type="date" placeholder="13/12/2016" class="form-control" required ng-model="vm.item.closed">
+            </div>
+            <div class="col-md-4">
+              <label>Min bid</label>
+              <input type="number" placeholder="2100" class="form-control" required ng-model="vm.item.minBid">
+            </div>
+          </div>
+
+          <br>
+          <button type="submit" class="btn btn-default btn-block">Add Item</button>
+          <br>
+        </form>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div ng-include="'/modules/chat/client/views/chat.client.view.html'"></div>
+    </div>
+  </div>
+</div>

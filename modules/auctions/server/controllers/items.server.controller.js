@@ -28,6 +28,7 @@ exports.read = function (req, res) {
  */
 exports.create = function (req, res) {
   var item = new AuctionItem(req.body);
+  console.log(req.body)
   item.user = req.user;
   item.lastBidValue = item.minBid;
 
@@ -73,10 +74,21 @@ exports.update = function (req, res) {
 
 
 /**
- * List of auction
+ * List of auction items
  */
 exports.index = function (req, res) {
-  AuctionItem.find().sort('-lastBid').populate('user', 'displayName').exec(function (err, items) {
+  var query = {};
+
+  if (req.query) {
+    query = req.query;
+    // FIX THIS
+    if (query.hasOwnProperty('auction') && typeof query.auction === 'string') {
+      query.auction = JSON.parse(query.auction);
+    }
+  }
+  if (req.auction) query.auction = { _id: req.auction._id };
+
+  AuctionItem.find(query).sort('-lastBid').populate('user', 'displayName').populate('auction').exec(function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)

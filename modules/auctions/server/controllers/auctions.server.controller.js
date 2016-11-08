@@ -8,6 +8,35 @@ var path = require('path'),
   Auction = mongoose.model('Auction'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+/**
+ * Show the current article
+ */
+exports.read = function (req, res) {
+  // convert mongoose document to JSON
+  var auction = req.auction ? req.auction.toJSON() : {};
+
+  // Add a custom field to the auction, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the auction model.
+  auction.isCurrentUserOwner = !!(req.user && auction.user && auction.user._id.toString() === req.user._id.toString());
+
+  res.json(auction);
+};
+
+/**
+ * List of bid
+ */
+exports.index = function (req, res) {
+
+  Auction.find().sort('-created').populate('user', 'displayName').exec(function (err, items) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(items);
+    }
+  });
+};
 
 /**
  * Create an auction

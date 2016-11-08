@@ -5,14 +5,15 @@
     .module('auctions')
     .controller('ItemsController', ItemsController);
 
-  ItemsController.$inject = ['$scope', '$state', '$uibModal', 'auctionItemResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
+  ItemsController.$inject = ['$scope', '$state', '$uibModal', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
 
-  function ItemsController ($scope, $state, $uibModal, auctionItem, AuctionItemsService, Notification, BidAnnouncerService) {
+  function ItemsController ($scope, $state, $uibModal, auctionResolve, AuctionItemsService, Notification, BidAnnouncerService) {
     var vm = this;
 
+    vm.auction = auctionResolve;
     vm.save = save;
-    vm.item = auctionItem;
-    vm.items = AuctionItemsService.query();
+    vm.item = vm.auction.newItem();
+    vm.items = vm.auction.items();
     vm.openDetail = openDetail;
     vm.changeOrder = changeOrder;
 

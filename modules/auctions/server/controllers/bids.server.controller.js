@@ -50,7 +50,7 @@ exports.index = function (req, res) {
       query.auctionItem = JSON.parse(query.auctionItem);
     }
   }
-  if (req.auction) query.auctionItem = { _id: req.auction._id };
+  if (req.auctionItem) query.auctionItem = { _id: req.auction._id };
 
   AuctionBid.find(query).sort('-value').populate('user', 'displayName profileImageURL').populate('auctionItem', '_id').exec(function (err, items) {
     if (err) {
