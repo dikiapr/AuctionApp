@@ -21,7 +21,6 @@
     vm.items = vm.auction.items();
     vm.openDetail = openDetail;
     vm.changeOrder = changeOrder;
-    vm.coverFileSelected = false;
 
     function save(isValid) {
       // if (!isValid) {
@@ -143,14 +142,11 @@
 
       vm.auction.coverImageURL = response.coverImageURL;
 
-      // Reset form
-      vm.fileSelected = false;
       // vm.progress = 0;
     }
 
     // Called after the user has failed to uploaded a new picture
     function onErrorItem(response) {
-      vm.fileSelected = false;
 
       // Show error message
       Notification.error({ message: response.message, title: '<i class="glyphicon glyphicon-remove"></i> Change profile picture failed!' });

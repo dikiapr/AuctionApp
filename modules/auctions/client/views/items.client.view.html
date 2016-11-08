@@ -1,22 +1,31 @@
 <div class="wraper-auction">
   <!-- <div class="img-header" style="background: url({{vm.coverFileSelected ? vm.newCover.src : '/' + vm.auction.coverImageURL}}) no-repeat center;"></div> -->
   <div class="img-header" style="background: url({{'/' + vm.auction.coverImageURL}}) no-repeat center;"></div>
-  <h4 ng-bind="vm.auction.title" ng-show="!vm.Auction.edit"></h4>
-  <p ng-bind="vm.auction.desc" ng-show="!vm.Auction.edit"></p>
-  <div ng-if="vm.auction.isCurrentUserOwner">
-    <input type="text" class="form-control" ng-model="vm.auction.title" required ng-show="vm.Auction.edit">
-    <textarea type="text" class="form-control" ng-model="vm.auction.desc" required ng-show="vm.Auction.edit"> ng-show="vm.Auction.edit"</textarea>
-    <button type="button" class="btn btn-sm btn-info" ng-model="vm.Auction.edit" uib-btn-checkbox ng-show="!vm.Auction.edit">Edit</button>
-    <button type="button" class="btn btn-sm" ng-click="vm.Auction.edit = false" ng-show="vm.Auction.edit">Cancel</button>
-    <button type="button" class="btn btn-sm btn-info" ng-click="vm.Auction.update()" ng-show="vm.Auction.edit">Edit</button>
-    <button type="button" class="btn btn-sm btn-danger" ng-click="vm.Auction.destroy()">Delete</button>
-
-    <form>
-      <button class="btn btn-default" ngf-select="vm.coverFileSelected = true" ng-model="newCover" accept="image/*">Select Picture</button>
-      <!-- <img ngf-thumbnail="newCover" class="hide"> -->
-      <button ng-click="vm.Auction.changeCover(newCover)" ng-show="vm.coverFileSelected">Change</button>
-    </form>
-  </div>
+    <div class="auction-title-wrap">
+      <h4 ng-bind="vm.auction.title" ng-show="!vm.Auction.edit"></h4>
+      <p ng-bind="vm.auction.desc" ng-show="!vm.Auction.edit"></p>
+      <div ng-if="vm.auction.isCurrentUserOwner">
+        <input type="text" class="form-control" ng-model="vm.auction.title" required ng-show="vm.Auction.edit">
+        <textarea type="text" class="form-control" ng-model="vm.auction.desc" required ng-show="vm.Auction.edit"></textarea>
+        <button type="button" class="btn btn-sm" ng-click="vm.Auction.edit = false" ng-show="vm.Auction.edit">Cancel</button>
+        <button type="button" class="btn btn-sm btn-info" ng-click="vm.Auction.update()" ng-show="vm.Auction.edit">Edit</button>
+        <div class="text-right">
+          <span uib-dropdown>
+            <a href id="simple-dropdown" uib-dropdown-toggle>
+              Sunting
+            </a>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+              <li>
+                <a href="javascript:void(0)" ngf-select="vm.Auction.changeCover(newCover)" ng-model="newCover" accept="image/*">Change cover</a>
+                <a href="javascript:void(0)" ng-click="vm.Auction.edit = false" ng-show="vm.Auction.edit">Cancel Edit</a>
+                <a href="javascript:void(0)" ng-model="vm.Auction.edit" uib-btn-checkbox ng-show="!vm.Auction.edit">Edit</a>
+                <a href="javascript:void(0)" ng-click="vm.Auction.destroy()">Delete</a>
+              </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+    </div>
   <div class="row" style="padding: 0px 10px;">
     <div class="col-md-8">
       <br>
