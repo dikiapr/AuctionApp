@@ -1,25 +1,45 @@
-<br>
-<br>
+<div class="home-header">
+</div>
 
-<form ng-submit="vm.Auction.save()">
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Auction name.." required ng-model="vm.auction.title">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="submit">Create Auction!</button>
-    </span>
-  </div>
-  <textarea type="text" class="form-control" placeholder="Description auction.." required ng-model="vm.auction.desc"></textarea>
+<div class="col-md-12 form-wrapper">
+  <form ng-submit="vm.Auction.save()">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Auction name.." required ng-model="vm.auction.title">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Create Auction!</button>
+      </span>
+    </div>
+    <textarea type="text" class="form-control" placeholder="Description auction.." required ng-model="vm.auction.desc"></textarea>
+</div>
 </form>
 
-<h3>Auctions</h3>
-<hr>
+<div class="row" style="margin: 0px 1%">
+  <div class="col-md-8">
+    <h3>Auctions</h3>
+    <hr>
 
-<div>
-  <div class="list-group">
-    <a ui-sref="auctions.items({auctionId: auction._id})" class="list-group-item" ng-repeat="auction in vm.Auction.all">
-      <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
-      <p class="list-group-item-text" ng-bind="auction.desc"></p>
-      <strong>by {{auction.user.displayName}}</strong>
-    </a>
+    <div>
+      <div class="list-group">
+        <a ui-sref="auctions.items({auctionId: auction._id})" class="list-group-item" ng-repeat="auction in vm.Auction.all">
+          <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
+          <p class="list-group-item-text" ng-bind="auction.desc"></p>
+          <strong>by {{auction.user.displayName}}</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>Top Bids</h3>
+    <hr>
+
+    <div>
+      <div class="list-group">
+        <a ui-sref="auctions.items({auctionId: auction._id})" class="list-group-item" ng-repeat="auction in vm.Auction.all">
+          <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
+          <p class="list-group-item-text" ng-bind="auction.desc"></p>
+          <strong>by {{auction.user.displayName}}</strong>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
