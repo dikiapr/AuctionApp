@@ -5,20 +5,23 @@
     .module('auctions')
     .controller('ItemsController', ItemsController);
 
-  ItemsController.$inject = ['$scope','$window', '$state', '$uibModal', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService'];
+  ItemsController.$inject = ['$scope','$window', '$state', '$uibModal', '$timeout', 'auctionResolve', 'AuctionItemsService', 'Notification', 'BidAnnouncerService', 'Upload'];
 
-  function ItemsController ($scope, $window, $state, $uibModal, auctionResolve, AuctionItemsService, Notification, BidAnnouncerService) {
+  function ItemsController ($scope, $window, $state, $uibModal, $timeout, auctionResolve, AuctionItemsService, Notification, BidAnnouncerService, Upload) {
     var vm = this;
 
     vm.auction = auctionResolve;
     vm.Auction = {
-      destroy: destroyAuction
+      update: updateAuction,
+      destroy: destroyAuction,
+      changeCover: changeCoverAuction
     };
     vm.save = save;
     vm.item = vm.auction.newItem();
     vm.items = vm.auction.items();
     vm.openDetail = openDetail;
     vm.changeOrder = changeOrder;
+    vm.coverFileSelected = false;
 
     function save(isValid) {
       // if (!isValid) {
@@ -96,6 +99,61 @@
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction deleted successfully!' });
         });
       }
+    }
+
+    function updateAuction () {
+      vm.auction.createOrUpdate()
+        .then(successCallback)
+        .catch(errorCallback);
+
+      function successCallback(res) {
+        vm.auction = res;
+        vm.Auction.edit = false;
+
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Auction updated successfully!' });
+      }
+
+      function errorCallback(res) {
+        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Auction updated error!' });
+      }
+    }
+
+    function changeCoverAuction (image) {
+      Upload.upload({
+        url: '/api/auctions/' +vm.auction._id+ '/cover',
+        data: {
+          newCoverImage: image
+        }
+      }).then(function (response) {
+        $timeout(function () {
+          onSuccessItem(response.data);
+        });
+      }, function (response) {
+        if (response.status > 0) onErrorItem(response.data);
+      }, function (evt) {
+        // vm.progress = parseInt(100.0 * evt.loaded / evt.total, 10);
+      });
+    }
+
+
+    // Called after the user has successfully uploaded a new picture
+    function onSuccessItem(response) {
+      // Show success message
+      Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Change profile picture successful!' });
+
+      vm.auction.coverImageURL = response.coverImageURL;
+
+      // Reset form
+      vm.fileSelected = false;
+      // vm.progress = 0;
+    }
+
+    // Called after the user has failed to uploaded a new picture
+    function onErrorItem(response) {
+      vm.fileSelected = false;
+
+      // Show error message
+      Notification.error({ message: response.message, title: '<i class="glyphicon glyphicon-remove"></i> Change profile picture failed!' });
     }
 
   }

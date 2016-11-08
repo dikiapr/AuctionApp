@@ -51,6 +51,9 @@ module.exports = {
       limits: {
         fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
       }
+    },
+    coverUpload: {
+      dest: './modules/auctions/client/img/cover/uploads/', // Profile upload destination path
     }
   },
   shared: {

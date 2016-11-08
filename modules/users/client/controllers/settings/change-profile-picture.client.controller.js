@@ -14,11 +14,11 @@
     vm.fileSelected = false;
 
     vm.upload = function (dataUrl, name) {
-
+      console.log(dataUrl)
       Upload.upload({
         url: '/api/users/picture',
         data: {
-          newProfilePicture: Upload.dataUrltoBlob(dataUrl, name)
+          newProfilePicture: dataUrl
         }
       }).then(function (response) {
         $timeout(function () {
