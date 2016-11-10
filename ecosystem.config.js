@@ -3,7 +3,7 @@ module.exports = {
     {
       name      : "auction_app",
       script    : "/usr/local/bin/npm",
-      cwd       : "/home/vagrant/apps/AuctionApp",
+      cwd       : "/home/vagrant/apps/current",
       args      : "run start:prod"
     },
   ],
