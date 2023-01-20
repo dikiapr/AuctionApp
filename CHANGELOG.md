@@ -1,6 +1,7 @@
 <a name="0.5.0"></a>
 # 0.5.0 (2016-10-21)
 
+* hello world
 * bluemix(remove): Remove Excess CF files (#1542) ([f0867c2](https://github.com/meanjs/mean/commit/f0867c2))
 * chore(core): Remove Bluemix (#1476) ([dd80951](https://github.com/meanjs/mean/commit/dd80951))
 * chore(release): bumping to version 0.5.0 ([fe597de](https://github.com/meanjs/mean/commit/fe597de))
